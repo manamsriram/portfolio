@@ -16,7 +16,7 @@ export type TimelineItem = {
   start: string
   /** "YYYY-MM"; omit for a single-point commit or a still-open branch (status is open-ended) */
   end?: string
-  track: 'education' | 'experience' | 'project'
+  track: 'education' | 'experience' | 'project' | 'certification'
   title: string
   description: string
   tags?: string[]
@@ -69,4 +69,5 @@ export const timelineItems: TimelineItem[] = [
   { id: 'lessgo-main-start', branch: 'lessgo-main', start: '2026-05', end: '2026-06', track: 'project', title: 'LessGo · Post-grad polish started', description: 'Kept working on LessGo for a month after graduation, wrapping up remaining features.', tags: ['TypeScript', 'Swift/SwiftUI', 'Node.js', 'PostgreSQL'], status: 'started', visible: true },
   { id: 'lessgo-main-end', branch: 'lessgo-main', start: '2026-06', track: 'project', title: 'LessGo · Post-grad polish', description: 'Finished the post-grad round of LessGo improvements.', tags: ['TypeScript', 'Swift/SwiftUI', 'Node.js', 'PostgreSQL'], status: 'completed', link: 'https://github.com/manamsriram/SJSU_Ridesharing', visible: true },
   { id: 'solo-leveling', branch: 'solo-leveling', start: '2026-06', track: 'project', title: 'SoloLeveling', description: 'Personal task tracking application.', tags: ['TypeScript'], status: 'in-progress', link: 'https://github.com/manamsriram/SoloLeveling', visible: true },
+  { id: 'jobradar', branch: 'jobradar', start: '2026-07', track: 'project', title: 'JobRadar', description: 'Job listing aggregator with search and application tracking.', tags: ['TypeScript'], status: 'in-progress', link: 'https://github.com/manamsriram/JobRadar', visible: true },
 ]

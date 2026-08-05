@@ -12,6 +12,22 @@ interface Cert {
 const certs: Cert[] = [
   {
     status: 'Completed',
+    issuer: 'AWS',
+    title: 'AWS Certified Cloud Practitioner',
+    description:
+      'Foundational AWS cloud concepts, core services, security, architecture, pricing, and support models.',
+    link: 'https://www.credly.com/badges/acfd9e76-24e0-41e9-99bd-262feea852d1/public_url',
+  },
+  {
+    status: 'Completed',
+    issuer: 'Walmart / Forage',
+    title: 'Advanced Software Engineering Virtual Experience',
+    description:
+      'Built a custom d-ary heap in Java and designed ERD/UML models while wrangling noisy CSV and database data into a single, standardized schema through data wrangling (data munging).',
+    link: 'https://www.theforage.com/completion-certificates/prBZoAihniNijyD6d/oX6f9BbCL9kJDJzfg_prBZoAihniNijyD6d_6994b6eaf08021556e51fd39_1785829023349_completion_certificate.pdf',
+  },
+  {
+    status: 'Completed',
     issuer: 'Wells Fargo / Forage',
     title: 'Software Engineering Virtual Experience',
     description:

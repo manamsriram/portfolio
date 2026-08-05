@@ -148,8 +148,8 @@ export function Contact() {
             ))}
             <div className="border border-terminal bg-terminal rounded-lg p-5">
               <p className="font-mono text-xs text-primary uppercase tracking-widest">Location</p>
-              <p className="mt-1 text-foreground">San Jose, California</p>
-              <p className="mt-1 text-xs text-muted-foreground">Open to relocation</p>
+              <p className="mt-1 text-foreground">Milpitas, California</p>
+              <p className="mt-1 text-xs text-muted-foreground">Open to work · Open to relocation</p>
             </div>
           </motion.div>
         </div>
@@ -161,7 +161,7 @@ export function Contact() {
           className="mt-16 pt-8 border-t border-terminal flex flex-col md:flex-row justify-between items-center gap-3 font-mono text-xs text-muted-foreground"
         >
           <p>© {new Date().getFullYear()} Sri Ram Mannam · Built with care</p>
-          <p>San Jose, CA · Available Spring 2026</p>
+          <p>Milpitas, CA · Open to work</p>
         </motion.footer>
       </div>
     </section>
