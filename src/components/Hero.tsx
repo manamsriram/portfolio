@@ -4,6 +4,7 @@ import { AntigravityBackground } from './AntigravityBackground'
 import { LiveClock } from './LiveClock'
 import { TerminalCard } from './TerminalCard'
 import { TypedText } from './TypedText'
+import { scrollToId } from '@/hooks/useLenis'
 
 const TERMINAL_PHRASES = [
   'Building distributed systems that stay correct under failure',
@@ -13,12 +14,17 @@ const TERMINAL_PHRASES = [
   'Mastering software-defined networking...',
 ]
 
+const HERO_QUOTES = [
+  "Systems fail quietly. I don't.",
+  "Correct isn't enough. Correct under failure is.",
+  "It compiled. That's not the same as correct.",
+]
+
 export function Hero() {
   const [resumeOpen, setResumeOpen] = useState(false)
+  const [quote] = useState(() => HERO_QUOTES[Math.floor(Math.random() * HERO_QUOTES.length)])
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollTo = scrollToId
 
   return (
     <section id="hero" className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
@@ -116,14 +122,16 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground animate-bounce"
-      >
-        ↓
-      </motion.div>
+      <div className="absolute bottom-8 left-6 right-6 md:left-10 md:right-10">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, duration: 0.9 }}
+          className="mb-6 max-w-[28ch] md:max-w-[26ch] font-display text-foreground/80 text-xl md:text-2xl leading-snug"
+        >
+          {quote}
+        </motion.p>
+      </div>
     </section>
   )
 }

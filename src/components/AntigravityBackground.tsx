@@ -25,7 +25,7 @@ type Node = {
   rotationSpeed: number
 }
 
-const COUNT = 180
+const COUNT = 100
 const POINTER_ACTIVE_RADIUS = 220 // just outside orbit band: nodes get picked up/dropped as cursor passes
 
 export function AntigravityBackground() {
@@ -85,6 +85,33 @@ export function AntigravityBackground() {
       }
     })
 
+    // Pre-rasterizing each glyph once and blitting it with drawImage avoids
+    // re-rasterizing font outlines from fillText() every frame — that font
+    // rasterization, not the ctx.font/fillStyle switches, was the real cost.
+    const spriteCache = new Map<string, { bitmap: HTMLCanvasElement; half: number }>()
+    const getSprite = (n: Node) => {
+      const roundedSize = Math.round(n.size)
+      const key = `${n.glyph}|${n.color}|${roundedSize}`
+      let sprite = spriteCache.get(key)
+      if (!sprite) {
+        const pad = 4
+        const dim = roundedSize * 2 + pad * 2
+        const off = document.createElement('canvas')
+        off.width = dim
+        off.height = dim
+        const octx = off.getContext('2d')!
+        octx.font = `${roundedSize}px monospace`
+        octx.fillStyle = `hsl(${colorVars[n.color]})`
+        octx.textAlign = 'center'
+        octx.textBaseline = 'middle'
+        octx.fillText(n.glyph, dim / 2, dim / 2)
+        sprite = { bitmap: off, half: dim / 2 }
+        spriteCache.set(key, sprite)
+      }
+      return sprite
+    }
+    for (const n of nodes) getSprite(n)
+
     let animId = 0
     let hidden = false
 
@@ -126,18 +153,14 @@ export function AntigravityBackground() {
         n.x += (targetX - n.x) * n.lag
         n.y += (targetY - n.y) * n.lag
 
-        const rgb = colorVars[n.color]
-        ctx.save()
-        ctx.translate(n.x, n.y)
-        ctx.rotate(n.rotation)
+        const { bitmap, half } = getSprite(n)
         ctx.globalAlpha = n.opacity
-        ctx.font = `${n.size}px monospace`
-        ctx.fillStyle = `hsl(${rgb})`
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText(n.glyph, 0, 0)
-        ctx.restore()
+        const cos = Math.cos(n.rotation)
+        const sin = Math.sin(n.rotation)
+        ctx.setTransform(cos, sin, -sin, cos, n.x, n.y)
+        ctx.drawImage(bitmap, -half, -half)
       }
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
 
       if (!hidden) animId = requestAnimationFrame(step)
     }
@@ -145,17 +168,12 @@ export function AntigravityBackground() {
     const drawStatic = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       for (const n of nodes) {
-        const rgb = colorVars[n.color]
-        ctx.save()
-        ctx.translate(n.x, n.y)
+        const { bitmap, half } = getSprite(n)
         ctx.globalAlpha = n.opacity
-        ctx.font = `${n.size}px monospace`
-        ctx.fillStyle = `hsl(${rgb})`
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText(n.glyph, 0, 0)
-        ctx.restore()
+        ctx.setTransform(1, 0, 0, 1, n.x, n.y)
+        ctx.drawImage(bitmap, -half, -half)
       }
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
     }
 
     if (reduceMotion) {
