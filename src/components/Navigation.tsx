@@ -13,7 +13,7 @@ const navItems = [
 
 const socialLinks = [
   { label: 'Mail', href: 'mailto:sriram.mannam10@gmail.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/srirammannam' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sri-ram-mannam-8b61aa228' },
   { label: 'GitHub', href: 'https://github.com/manamsriram' },
 ]
 

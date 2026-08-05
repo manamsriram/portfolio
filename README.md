@@ -17,7 +17,7 @@ devops/  backend/  distributed-systems/  cloud/  networking/
 
 $ cat contact.txt
 github.com/manamsriram
-linkedin.com/in/srirammannam
+linkedin.com/in/sri-ram-mannam-8b61aa228
 ```
 
 ## Stack
@@ -38,4 +38,4 @@ So people can see how the site's built, steal what's useful, and reach me if som
 
 ---
 
-📫 **sriram.mannam10@gmail.com** · [GitHub](https://github.com/manamsriram) · [LinkedIn](https://linkedin.com/in/srirammannam)
+📫 **sriram.mannam10@gmail.com** · [GitHub](https://github.com/manamsriram) · [LinkedIn](https://www.linkedin.com/in/sri-ram-mannam-8b61aa228)

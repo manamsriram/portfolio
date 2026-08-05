@@ -129,7 +129,7 @@ export function Contact() {
           >
             {[
               { label: 'Email', value: 'sriram.mannam10@gmail.com', href: 'mailto:sriram.mannam10@gmail.com' },
-              { label: 'LinkedIn', value: 'Sri Ram Mannam', href: 'https://linkedin.com/in/srirammannam' },
+              { label: 'LinkedIn', value: 'Sri Ram Mannam', href: 'https://www.linkedin.com/in/sri-ram-mannam-8b61aa228' },
               { label: 'GitHub', value: 'manamsriram', href: 'https://github.com/manamsriram' },
             ].map((c) => (
               <a
