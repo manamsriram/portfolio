@@ -182,15 +182,30 @@ export function AntigravityBackground() {
       step()
     }
 
+    // Pause the loop when the tab is hidden or the hero is scrolled off-screen.
+    let tabHidden = document.hidden
+    let offscreen = false
+    const sync = () => {
+      const shouldHide = tabHidden || offscreen
+      if (shouldHide === hidden) return
+      hidden = shouldHide
+      if (hidden || reduceMotion) cancelAnimationFrame(animId)
+      else step()
+    }
     const onVisibility = () => {
-      hidden = document.hidden
-      if (!hidden && !reduceMotion) step()
-      else cancelAnimationFrame(animId)
+      tabHidden = document.hidden
+      sync()
     }
     document.addEventListener('visibilitychange', onVisibility)
+    const observer = new IntersectionObserver(([entry]) => {
+      offscreen = !entry.isIntersecting
+      sync()
+    })
+    observer.observe(canvas)
 
     return () => {
       cancelAnimationFrame(animId)
+      observer.disconnect()
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseleave', onLeave)
