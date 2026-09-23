@@ -73,6 +73,10 @@ export function About() {
                 <img
                   src={profileUrl}
                   alt="Sri Ram Mannam"
+                  width={360}
+                  height={480}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full aspect-square object-cover rounded-lg border border-terminal"
                 />
                 <div className="absolute inset-0 rounded-lg ring-1 ring-primary/20 pointer-events-none" />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { TerminalCard } from './TerminalCard'
 
 const USERNAME = 'manamsriram'
@@ -34,8 +34,27 @@ function writeCache(stats: Stats) {
 export function GitHubStats() {
   const [stats, setStats] = useState<Stats | null>(() => readCache())
   const [error, setError] = useState(false)
+  const [inView, setInView] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // Hold the API calls until the card scrolls near the viewport.
+  useEffect(() => {
+    const el = rootRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        setInView(true)
+        observer.disconnect()
+      },
+      { rootMargin: '200px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
+    if (!inView) return
     if (stats?.repos && stats?.commits && stats?.languages) return
     const year = new Date().getFullYear()
     Promise.allSettled([
@@ -63,10 +82,11 @@ export function GitHubStats() {
       setStats(next)
       if (next.repos != null && next.commits != null && next.languages != null) writeCache(next)
     })
-  }, [stats])
+  }, [stats, inView])
 
   if (error) {
     return (
+      <div ref={rootRef}>
       <TerminalCard label="github-stats">
         <p className="text-muted-foreground">
           GitHub API unavailable —{' '}
@@ -80,6 +100,7 @@ export function GitHubStats() {
           </a>
         </p>
       </TerminalCard>
+      </div>
     )
   }
 
@@ -90,6 +111,7 @@ export function GitHubStats() {
   ]
 
   return (
+    <div ref={rootRef}>
     <TerminalCard label="github-stats">
       <div className="grid grid-cols-3 gap-4 mb-4">
         {rows.map(({ label, value }) => (
@@ -108,5 +130,6 @@ export function GitHubStats() {
         loading="lazy"
       />
     </TerminalCard>
+    </div>
   )
 }
